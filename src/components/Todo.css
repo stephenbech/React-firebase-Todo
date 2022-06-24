@@ -1,0 +1,18 @@
+.todo_list{
+    text-align: left !important;
+    justify-content: left !important; 
+ /* border: 2px red solid; */
+ /* width: 20%; */
+ text-decoration: none;
+ margin-right: 40px;
+
+}
+
+.theme{
+    position: 'absolute';
+    width: 400;
+    background-color: blue;
+    border: '2px solid #000';
+    /* boxShadow: 5]; */
+    padding: 2 4 3;
+}
