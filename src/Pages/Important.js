@@ -3,13 +3,16 @@ import Header from '../components/Header';
 import styled from 'styled-components';
 import {Button, FormControl, Input, InputLabel} from '@mui/material';
 import Todo from "../components/Todo"
-import db from "../firebase";
+import db from "../components/firebase";
 import { query, onSnapshot,  doc, collection, addDoc, orderBy, serverTimestamp } from 'firebase/firestore';
+
+
 
 function Important() {
     const [important, setImportant] = useState([]);
     const [input, setInput] = useState('');
     
+
     //when the app loads, we need to listen to the database and fetch new todos as they get added/removed
     useEffect(() => {
       //this code here.. fires when the app.js loads
@@ -32,7 +35,7 @@ function Important() {
         addDoc(collection(db, "important"),{
             important: input,
             timeStamp: serverTimestamp(),
-            id: Math.floor(10 + Math.random() * 100)
+            // id: Math.floor(10 + Math.random() * 100)
         })
         .then(function () {
             console.log("Value successfully written!");
@@ -66,7 +69,10 @@ function Important() {
   
                   <ul>
                 {important.map(todo => (
-                    <Todo text={todo.important} id = {todo.id} />
+                  <>
+                    <Todo text={todo.important} id={todo.id} />
+                   
+                  </>
                 ))}
               </ul>
         </Content>

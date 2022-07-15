@@ -3,9 +3,18 @@ import { AiOutlineBars } from "react-icons/ai";
 import { RiBarChartHorizontalLine } from "react-icons/ri";
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
+import { logOut } from './firebase';
 function Header() {
   const [burgerStatus, setBurgerStatus] = useState(false);
   const navigate = useNavigate();
+  const handleLogout = () =>{
+    try{
+         logOut();
+         navigate('/')
+    }catch(error){
+    }
+ }
+
   return (
     <Container>
       {/* <Nav> */}
@@ -16,7 +25,7 @@ function Header() {
         <CloseWrapper>
           <CustomClose onClick={()=>setBurgerStatus(false)}/>
         </CloseWrapper>
-        <li onClick={() => {navigate("/")}}><a href='#'>Assigned</a></li>
+        <li onClick={() => {navigate("/assigned")}}><a href='#'>Assigned</a></li>
         <li onClick={() => {navigate("/important")}}><a href='#'>Important</a></li>
         <li><a href='#'>MyDay</a></li>
         <li><a href='#'>planned </a></li>
@@ -24,7 +33,8 @@ function Header() {
       </BurgerNav>
 
       <h1 className='App-header'>MyDay  🚀!!!</h1>
-      <RightMenu>
+      <RightMenu className='btnContainer'>
+        <button  onClick={handleLogout}> Sign Out </button>
       </RightMenu>
       {/* </Nav> */}
     </Container>
@@ -34,9 +44,8 @@ function Header() {
 export default Header
 
 const Container = styled.nav`
-  /* position: fixed; */
   min-height: 60px;
-  position: fixed;
+  /* position: fixed; */
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -46,7 +55,7 @@ const Container = styled.nav`
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 9;
 
    /* min-height: 60px;
    display: flex;
@@ -78,7 +87,9 @@ cursor: pointer;
 `
 
 
-const RightMenu=styled.div``
+const RightMenu=styled.div`
+  width: auto;
+`
 
 const BurgerNav = styled.div`
   position: fixed;

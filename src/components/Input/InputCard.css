@@ -1,0 +1,30 @@
+.card{
+    /* width: 300px; */
+    padding:0px 10px 40px 10px;
+    margin:5px 10px 10px 10px;
+}
+
+.btnConfirm{
+    background: #5aac44 !important;
+    width: 100px;
+    margin-left: 10px !important;
+    color: white !important;
+    margin-bottom: 10px !important;
+}
+
+.btnConfirm:hover{
+     opacity: 0.75;
+}
+
+.confirm{
+    /*  */
+    display: flex;
+
+}
+
+.closeIcon{
+    width: 40px;
+    margin-left: 50px !important;
+    align-items: center;
+    margin-bottom: 10px !important;
+}
