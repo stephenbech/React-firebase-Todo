@@ -1,3 +1,8 @@
+/* .contain{
+     background-image: url("../public/images/checklist.jpg") !important;
+} */
+
 .label{
     z-index: -1;
+   
 }

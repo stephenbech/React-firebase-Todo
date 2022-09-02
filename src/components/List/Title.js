@@ -4,7 +4,7 @@ import { makeStyles } from '@mui/styles';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import IconButton from '@mui/material/IconButton';
-
+import Tooltip from '@mui/material/Tooltip';
 import './Title.css';
 import styled from 'styled-components';
 import db from "../firebase";
@@ -17,29 +17,37 @@ function Title({title, id, listId}) {
 
     
     const handleUpdate = () => {
-      alert('Hello')
-      // console.log(newTitle)
-      // console.log(id)
-      // updateDoc(doc(db, "list", id), {
-      //   title: newTitle,
-      // })
+      if(newTitle == ''){
+         alert('empty')
+         setNewTitle(title)
+      }else{
+        console.log(newTitle)
+        console.log(id)
+        updateDoc(doc(db, "list", id), {
+          title: newTitle,
+        })
+      }
     }
       
-    //
+    // onBlur={() => { setOpen(false); setNewTitle('') }} 
   return (
     <div>
         {open ? (
             <div className='editableTitleContainer'>
-              <InputBase id={id} value={newTitle} className= 'input' onBlur={() => {setOpen(false);  setNewTitle('') }} 
-                  onChange={event => {setNewTitle(event.target.value); console.log(newTitle)}} placeholder='Update Title' />
-              <EditIcon className='icon' onClick = {() => {handleUpdate(); setOpen(false);  setNewTitle('')}} /> 
+              <InputBase id={id} value={newTitle} className= 'input' 
+                  onChange={event => {setNewTitle(event.target.value); console.log(newTitle)}} placeholder='Update Title' 
+              />
+              <Tooltip title="Edit Title">
+                <EditIcon className='icon' onClick = {() => { handleUpdate(); setOpen(false); setNewTitle('')}} />
+              </Tooltip>
+              
             </div>
         ) : (
             <div className='editableTitleContainer' >            
-                <Typography onClick={() => setOpen(!open) } className='editableTitle' >
+                <Typography onClick={() => setOpen(!open) } className='editableTitle'>
                   {title}
                 </Typography>            
-                <MoreHorizIcon className='icon'/>
+                <MoreHorizIcon className='icon' onClick = {() => {setOpen(!open);}}/>
                            
             </div>
         )} 

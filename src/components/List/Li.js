@@ -1,40 +1,59 @@
 import { CssBaseline, Paper, Typography, Box } from '@mui/material'
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useRef} from 'react'
 import Card from './Card'
 import InputContainer from '../Input/InputContainer'
 import './Li.css'
 import Title from './Title'
-import { query, onSnapshot, collection, orderBy} from 'firebase/firestore'
-import db from "../firebase";
+import { Droppable } from 'react-beautiful-dnd'
 
+function Li({title, id, data, index}) {
+  // ref={provided.innerRef} {...provided.droppableProps}
+  // const dragItem = useRef();
+  const [lists, setLists] = useState([]);
 
-function Li({title, id, data}) {
-    // const [todos, setTodos] = useState([]);
-    // useEffect(() => {
-    //     //   //this code here.. fires when the app.js loads
-    //       const q = query(collection(db, 'todos'), orderBy("timeStamp", "desc") )
-    //       onSnapshot(q, snapshot => {
-    //           console.log(snapshot.docs.map(doc => doc.data()));
-    //           let todoArray = []
-    //         let result = (snapshot.docs.map(doc => ({
-    //             ...doc.data(), id: doc.id
-    //         })));
-    //           setTodos(result);
-              
-    //       })
-    //  }, []);
-    //  console.log(todos)
+  const dragItem = useRef();
+  const dragOverItem = useRef();
 
-     
-    
+  const dragStart = (e, position) => {
+    dragItem.current = position;
+    console.log(e.target.innerHTML);
+  };
+
+  const dragEnter = (e, position) => {
+    dragOverItem.current = position;
+    console.log(e.target.innerHTML);
+  };
+
+  const drop = (e) => {
+    const copyListItems = [...lists];
+    const dragItemContent = copyListItems[dragItem.current];
+    copyListItems.splice(dragItem.current, 1);
+    copyListItems.splice(dragOverItem.current, 0, dragItemContent);
+    dragItem.current = null;
+    dragOverItem.current = null;
+    setLists(copyListItems);
+  };
+
   return (
     <div>
             <Paper className='paper'>
-              
+              <CssBaseline/>
                 <Title title = {title} id = {id} />
-                  {data.map(item => (
-                    <Card text = {item} key={item}  />
-                  ))}
+                {/* <Droppable droppableId={id}> */}
+                  {/* {(provided) => ( */}
+                    <div >
+                     {data.map((item, index)=> (
+                      <Card text = {item} key={item} 
+                      onDragStart={(e) => dragStart()} 
+                      onDragEnter={(e) => dragEnter()}
+                      onDragEnd={drop}
+                      draggable
+                      />
+                      ))}
+                      {/* {provided.placeholder} */}
+                    </div>
+                  {/* )} */}
+                {/* </Droppable> */}
                 <InputContainer type="todo" id = {id} data = {data} />
             </Paper>
         
